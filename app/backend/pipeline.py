@@ -19,6 +19,7 @@ from app.rag.pdf_processor import extract_text, get_page_count, clean_text
 from app.rag.chunker import chunk_by_sentences
 from app.services.embeddings import get_embedding
 from app.backend import vector_db, metadata_store
+from app.utils.text_utils import first_n_words
 
 
 # ── public API ─────────────────────────────────────────────────────────────
@@ -79,7 +80,7 @@ def process(uploaded_file) -> Tuple[List[Dict], Dict, Optional[str]]:
         # 5. Metadata (silent fallback)
         file_size_mb = len(uploaded_file.getvalue()) / (1024 * 1024)
         try:
-            sample = metadata_store.first_n_words(text)
+            sample = first_n_words(text)
             meta = metadata_store.generate(
                 document_text=sample,
                 document_name=Path(uploaded_file.name).stem,

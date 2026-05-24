@@ -13,10 +13,10 @@ def chat_complete(
     model: str = CHAT_MODEL,
     temperature: float = 0.7,
     max_tokens: int = 800,
-) -> Optional[str]:
+) -> str:
     """
     Call the chat completions API and return the assistant message content.
-    Returns None on failure (caller decides how to handle).
+    Raises on failure — callers are responsible for catching and handling errors.
     """
     try:
         client = get_client()
@@ -27,5 +27,5 @@ def chat_complete(
             max_tokens=max_tokens,
         )
         return response.choices[0].message.content
-    except Exception as exc:
+    except Exception:
         raise  # let callers handle / log as appropriate

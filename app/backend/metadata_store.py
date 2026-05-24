@@ -12,6 +12,7 @@ from typing import List, Dict, Optional
 
 from app.config import BOOKS_DIR, CHAT_MODEL, METADATA_VERSION, METADATA_WORDS
 from app.services.llm import chat_complete
+from app.utils.text_utils import first_n_words
 
 
 METADATA_SCHEMA = {
@@ -171,6 +172,3 @@ def all_tags() -> List[str]:
     return sorted(tags)
 
 
-def first_n_words(text: str, n: int = METADATA_WORDS) -> str:
-    """Return the first *n* words of *text*."""
-    return " ".join(text.split()[:n])

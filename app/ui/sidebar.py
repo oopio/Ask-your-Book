@@ -3,6 +3,7 @@ Sidebar — document library, filters, upload, settings.
 Calls backend/pipeline and updates state; never touches RAG directly.
 """
 
+import os
 import streamlit as st
 from app.ui import state
 from app.backend import pipeline, library, filters as filter_engine
@@ -170,6 +171,16 @@ def _book_card(book: dict):
 
 
 def _upload_section():
+    # On Streamlit Cloud the disk is ephemeral — uploads would be lost on restart.
+    # Hide this section for deployed users; keep it available locally.
+    is_cloud = (
+        os.environ.get("STREAMLIT_SHARING_MODE") is not None
+        or os.environ.get("IS_STREAMLIT_CLOUD") is not None
+        or not os.path.exists(".env")
+    )
+    if is_cloud:
+        return
+
     st.markdown(_section_header("📤 Upload Document"), unsafe_allow_html=True)
 
     uploaded = st.file_uploader(
