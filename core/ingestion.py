@@ -271,23 +271,27 @@ def chunk_text_fixed_size(text: str, chunk_size: int = 500, overlap: int = 50) -
 
 def get_embedding(text: str) -> List[float]:
     """
-    Get embedding vector for text
-    
-    Args:
-        text: Text to embed
-    
-    Returns:
-        Embedding vector
+    Get embedding vector for text.
+    Returns the embedding list on success, or None on failure.
+    Stores the last exception message in a module-level variable so callers
+    can surface the real error rather than a generic message.
     """
+    global _last_embedding_error
     try:
         response = client.embeddings.create(
             model=EMBEDDING_MODEL,
             input=text
         )
+        _last_embedding_error = None
         return response.data[0].embedding
     except Exception as e:
+        _last_embedding_error = f"{type(e).__name__}: {e}"
         print(f"❌ Error generating embedding: {e}")
         return None
+
+
+# Module-level variable to hold the last embedding error for callers to inspect
+_last_embedding_error = None
 
 
 def ingest_book(

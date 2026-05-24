@@ -1,0 +1,21 @@
+{
+  "document_name": "ExerciseBook",
+  "file_path": "data/books/book_db_ExerciseBook.csv",
+  "categories": [
+    "Health and Fitness"
+  ],
+  "tags": [
+    "exercise",
+    "fitness",
+    "workout",
+    "training",
+    "health"
+  ],
+  "summary": "An exercise guide covering various workout routines and fitness training techniques.",
+  "upload_date": "2026-05-23",
+  "processing_date": "2026-05-23T20:55:34",
+  "page_count": 65,
+  "word_count": 6322,
+  "file_size_mb": 2.28,
+  "version": "1.0"
+}
